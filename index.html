@@ -1,10 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Mobile Budget</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Budget</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
+<body>
 
+    <div class="app-container">
+        <h1>Pocket Budget</h1>
+        
+        <div class="card">
+            <input type="text" id="desc" placeholder="What did you buy?">
+            <input type="number" id="amt" placeholder="Amount ($)">
+            <button id="add-btn" onclick="addExpense()">Add Expense</button>
+        </div>
 
+        <div class="stats-card">
+            <span>Total Spent:</span>
+            <span id="total-val">$0.00</span>
+        </div>
 
+        <div id="expense-list">
+            </div>
+
+        <div class="actions">
+            <button class="secondary-btn" onclick="downloadBackup()">Save to Device</button>
+            <button class="danger-btn" onclick="clearAll()">Clear All</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
