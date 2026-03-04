@@ -3,4 +3,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>My Mobile Budget</title>
     <link rel="stylesheet" href="style.css">
+
 </head>
+<div class="input-section">
+    <input type="text" id="description" placeholder="Expense Name">
+    <input type="number" id="amount" placeholder="Amount">
+    <button onclick="addEntry()">Add Item</button>
+    <button onclick="downloadBackup()" style="background-color: #3498db; margin-top: 10px;">Download Backup (.json)</button>
+</div>
