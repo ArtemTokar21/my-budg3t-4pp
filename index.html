@@ -529,12 +529,25 @@
 		<div class="scroll-hint" style="
 			text-align: center; 
 			font-family: 'Montserrat', sans-serif;
-			font-size: 12px;  
+			font-size: 0.95rem;
+	        font-weight: 400; 
 			letter-spacing: 2px; 
-			color: #FFFFF; 
+			color: #FFFFFF; /* Fixed to 6 digits */
 			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 15px; /* Adds space between arrows and text */
 		">
-			<strong>&larr; Left SCROLL Right &rarr;</strong>
+			<span style="transform: scaleX(1.8); display: inline-block;">
+				&longleftarrow;
+			</span>
+	
+			<strong>Scroll</strong>
+	
+			<span style="transform: scaleX(1.8); display: inline-block;">
+				&longrightarrow;
+			</span>
 		</div>
 
 		<div class="mockups-slider" style="
