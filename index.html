@@ -524,16 +524,49 @@
 		<a href="#plans" class="cta-btn">Build my budget</a>
     </section>
 
-    <section class="mockups-section">
-		<div class="mockups-placeholder" style="display: flex; gap: 20px;">
-			
-			<div class="mockup-img" style="width: 162px; height: 342px; overflow: hidden; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);"> 
-				<img src="Screen1.png" alt="smartbudgetUI1" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-			</div>
+	<section class="mockups-section" style="max-width: 100%; padding: 20px 0;">
+		<div class="mockups-slider" style="
+			display: flex; 
+			gap: 20px; 
+			overflow-x: auto; 
+			padding: 40px;
+			scroll-snap-type: x mandatory;
+			scrollbar-width: none;
+		">
+        
+        <div class="mockup-img" style="
+            flex: 0 0 300px; /* This sets the constant width */
+            height: 600px;   /* This sets the constant height */
+            overflow: hidden; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            scroll-snap-align: center;
+            background-color: #000; /* Fallback color */
+        "> 
+            <img src="Screen1.png" alt="smartbudgetUI1" style="
+                width: 100%; 
+                height: 100%; 
+                object-fit: contain; /* Options: 'cover' to fill, 'contain' to see everything */
+                display: block;
+            ">
+        </div>
 
-			<div class="mockup-img" style="width: 162px; height: 342px; overflow: hidden; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);"> 
-				<img src="Screen2.png" alt="smartbudgetUI2" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-			</div>
+        <div class="mockup-img" style="
+            flex: 0 0 300px; 
+            height: 600px; 
+            overflow: hidden; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            scroll-snap-align: center;
+            background-color: #000;
+        "> 
+            <img src="Screen2.png" alt="smartbudgetUI2" style="
+                width: 100%; 
+                height: 100%; 
+                object-fit: contain; 
+                display: block;
+            ">
+        </div>
 
 		</div>
 	</section>
