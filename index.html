@@ -3,34 +3,716 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pocket Budget</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Evease | Smart Planning Tool (Dark Mode)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth !important;
+        }
+        
+        /* =========================================
+           DARK THEME VARIABLES & PALETTE
+           ========================================= */
+        :root {
+            --orange-bg: #F8BC45;
+            --dark-teal: #2A4C46;
+            
+            /* Dark Mode Core Colors */
+            --bg-main: #121212;     /* Deep black for main background */
+            --bg-card: #1d211d;     /* Elevated dark gray for cards */
+            --white: #FFFFFF;
+            --text-light: #F0F0F0;  /* Off-white for readability */
+            --text-muted: #A0A0A0;  /* Gray for secondary text */
+            --red-stat: #EF585A;
+            
+            /* Gradient for CTA Buttons */
+            --btn-gradient: linear-gradient(90deg, #DF625E 0%, #2596A3 100%);
+        }
+
+        /* =========================================
+           RESET & GLOBAL
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000000; /* Pure black outer background */
+            color: var(--text-light);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Mobile Wrapper to keep design constrained on desktop */
+        .app-container {
+            max-width: 480px; /* Standard mobile width */
+            margin: 0 auto;
+            background-color: var(--bg-main);
+            min-height: 100vh;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================================
+           HEADER SECTION
+           ========================================= */
+        .header {
+			/* Replaced background-color with a linear-gradient */
+			background: var(--dark-teal);
+			position: relative;
+			padding: 5px 10px 5px;
+			text-align: center;
+			overflow: hidden;
+			z-index: 1;
+		}
+
+        .logo-text {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: var(--orange-bg); /* Highlight brand color */
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .header-icons svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .tagline {
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .tagline strong { font-weight: 800; color: var(--orange-bg); }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        .hero {
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            padding: 40px 20px 45px;
+            text-align: center;
+        }
+
+        .hero-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .hero-text .underline {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .brand-highlight { color: var(--orange-bg); }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--btn-gradient);
+            color: var(--white);
+            text-decoration: none;
+			font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 16px 40px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease;
+            margin-top: 15px;
+        }
+
+        .cta-btn:active { transform: scale(0.98); }
+
+        /* =========================================
+           FEATURES SECTION
+           ========================================= */
+        .features-section {
+            background-color: var(--bg-main);
+            padding: 10px 20px 50px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-card);
+            border-radius: 25px;
+            padding: 30px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 180px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .feature-icon {
+            width: 65px;
+            height: 65px;
+            margin-bottom: 15px;
+            object-fit: contain;
+            background-color: rgba(255,255,255,0.05); /* Soft background to make icon pop */
+            border-radius: 15px;
+            padding: 10px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-light);
+            line-height: 1.3;
+        }
+
+        /* =========================================
+           MOCKUPS SECTION
+           ========================================= */
+        .mockups-section {
+            background-color: var(--dark-teal);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .mockups-placeholder {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .mockup-img {
+            width: 45%;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background-color: #EFEFEF; /* Placeholder background */
+            /* Placeholder sizing */
+            aspect-ratio: 9/19; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* =========================================
+           REASONS & STATS SECTION
+           ========================================= */
+        .reasons-section {
+            background-color: var(--bg-main);
+            padding: 40px 20px 50px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border-radius: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-light);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-card-wide {
+            grid-column: 1 / -1;
+        }
+
+        .stat-card .percent {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--red-stat);
+            margin-bottom: 5px;
+        }
+
+        .reasons-footer-text {
+            font-size: 1.1rem;
+            font-weight: 800;
+           
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin: 30px 0;
+        }
+
+        /* =========================================
+           HOW TO START SECTION (ROUNDABOUT)
+           ========================================= */
+        .how-to-start-section {
+            background-color: var(--dark-teal);
+            padding: 40px 20px 60px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .wizard-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: var(--bg-main);
+            border-radius: 25px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            text-align: left;
+        }
+
+        .wizard-slide h3 {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        /* Form Inputs */
+        .wizard-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .wizard-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .wizard-input:focus {
+            outline: none;
+            border-color: var(--dark-teal);
+        }
+
+        /* Selectable Plans */
+        .selectable-plan {
+            background-color: var(--bg-card);
+            border: 2px solid rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .selectable-plan.active {
+            background-color: var(--dark-teal);
+            border-color: var(--dark-teal);
+        }
+
+        .selectable-plan h4 {
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+            color: var(--white);
+        }
+
+        .selectable-plan p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .selectable-plan.active p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Reminder Box under plans */
+        .reminder-box {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .reminder-box h5 {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .reminder-box ul {
+            list-style-position: inside;
+            padding-left: 5px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .reminder-box li {
+            margin-bottom: 5px;
+        }
+
+        /* Summary Box for Slide 3 */
+        .summary-box {
+            background-color: var(--bg-card);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .summary-box p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        
+        .summary-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-box strong {
+            color: var(--white);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* Navigation Buttons */
+        .wizard-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .wizard-buttons .cta-btn {
+            margin-top: 0;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            flex: 1; /* Makes buttons equal width */
+            text-align: center;
+        }
+
+        .cta-btn.disabled-btn {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+
+        /* Success Message styling */
+        .success-message {
+            text-align: center;
+            line-height: 1.6;
+            padding: 20px 0;
+        }
+        
+        .success-message h3 {
+            font-size: 1.4rem;
+            color: var(--orange-bg);
+            margin-bottom: 15px;
+        }
+        
+        .success-message p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* =========================================
+           SIMPLE FOOTER SECTION
+           ========================================= */
+        .footer-simple {
+            background-color: #000000; /* Pure black background */
+            color: #FFFFFF; /* White text */
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+    </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <h1>Pocket Budget</h1>
+<div class="app-container">
+    
+    <header class="header">
+        <h1 class="logo-text"><span style="color: white;">Ev</span>ease<h1>
+        <p class="tagline">Budget and event <strong>smart</strong> planning tool</p>
+    </header>
+
+    <section class="hero">
+        <p class="hero-text">
+            Having a trip, wedding or workshop? Thinking about the <span style="color: #EF585A">budget</span> makes you <span style="color: #EF585A">itch</span>?
+        </p>
+        <p class="hero-text" style="margin-bottom: 10px;">
+            <span class="brand-highlight">Evease</span> is here for you!
+        </p>
+        <a href="#plans" class="cta-btn">Build my budget</a>
+    </section>
+
+	<section class="features-section">
+        <h2 class="section-title">What you'll get</h2>
+        <div class="features-grid">
+            
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/128/16344/16344359.png" alt="Brain Guide" class="feature-icon">
+                <p>Budget guidance<br>& analytics</p>
+            </div>
+            
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/128/12196/12196219.png" alt="Pencil" class="feature-icon">
+                <p>Easy input</p>
+            </div>
+            
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/128/10568/10568821.png" alt="Handshake" class="feature-icon">
+                <p>Event sharing<br>& co-editing</p>
+            </div>
+            
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/128/10262/10262839.png" alt="Clipboard" class="feature-icon">
+                <p>Customizable<br>templates</p>
+            </div>
+            
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/128/2904/2904805.png" alt="Notebook" class="feature-icon">
+                <p>Notes</p>
+            </div>
+            
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/128/18605/18605343.png" alt="Checklist" class="feature-icon">
+                <p>Checklists</p>
+            </div>
+        </div>
+		<a href="#plans" class="cta-btn">Build my budget</a>
+    </section>
+
+    <section class="mockups-section">
+        <div class="mockups-placeholder">
+            <div class="mockup-img" style="width: 162px; height: 342px; overflow: hidden; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);"> 
+                <img src="https://cdn.dribbble.com/userupload/46771058/file/cb0bb3925683eac3759054cfa3fd64a7.png?resize=400x0" alt="smartbudgetUI1" style="width: 313%; height: 115%; float: right; margin-right: 157%">
+            </div>
+            <div class="mockup-img" style="width: 162px; height: 342px; overflow: hidden; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);"> 
+                <img src="https://cdn.dribbble.com/userupload/46771058/file/cb0bb3925683eac3759054cfa3fd64a7.png?resize=400x0" alt="smartbudgetUI1" style="width: 313%; height: 115%; float: right; margin-right: 157%">
+            </div>
+        </div>
+    </section>
+
+    <section class="reasons-section">
+        <h2 class="section-title">3 reasons to use Evease</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="percent">72%</span>
+                of travellers feel anxiety over fluctuating costs
+            </div>
+            <div class="stat-card">
+                <span class="percent">62%</span>
+                of planners are overwhelmed by budget tracking
+            </div>
+            <div class="stat-card stat-card-wide">
+                <span class="percent">48%</span>
+                of couples say the budget is their biggest stressor
+            </div>
+        </div>
+        <p class="reasons-footer-text">
+            Evease is designed to lighten the load on your mind. Stop overthinking the numbers and let your budget guide you
+        </p>
+        <a href="#plans" class="cta-btn">Build my budget</a>
+    </section>
+
+    <section id="plans" class="how-to-start-section">
+        <h2 class="section-title">How to start</h2>
         
-        <div class="card">
-            <input type="text" id="desc" placeholder="What did you buy?">
-            <input type="number" id="amt" placeholder="Amount ($)">
-            <button id="add-btn" onclick="addExpense()">Add Expense</button>
-        </div>
+        <div class="wizard-container">
+            <div class="wizard-slide" id="slide1">
+                <h3>Step 1/3: User Info</h3>
+                
+                <input type="email" id="userEmail" class="wizard-input" placeholder="Email address" required>
+                
+                <input type="text" id="eventType" class="wizard-input" list="eventTypesList" placeholder="Event type (trip, wedding, b-day...)">
+                <datalist id="eventTypesList">
+					<option value="Anniversary"></option>
+					<option value="Baby Shower"></option>
+					<option value="Bachelor / Bachelorette Party"></option>
+					<option value="Birthday (B-day)"></option>
+					<option value="Charity Event / Fundraiser"></option>
+					<option value="Conference / Seminar"></option>
+					<option value="Corporate Event / Retreat"></option>
+					<option value="Family Reunion"></option>
+					<option value="Festival / Concert"></option>
+					<option value="Graduation Party"></option>
+					<option value="Holiday Party"></option>
+					<option value="Networking Event"></option>
+					<option value="Party"></option>
+					<option value="Product Launch"></option>
+					<option value="Trip / Vacation"></option>
+					<option value="Wedding"></option>
+					<option value="Weekend Getaway"></option>
+					<option value="Workshop"></option>
+				</datalist>
 
-        <div class="stats-card">
-            <span>Total Spent:</span>
-            <span id="total-val">$0.00</span>
-        </div>
-
-        <div id="expense-list">
+                <div class="wizard-buttons">
+                    <button type="button" class="cta-btn" onclick="goToSlide(2)">Next</button>
+                </div>
             </div>
 
-        <div class="actions">
-            <button class="secondary-btn" onclick="downloadBackup()">Save to Device</button>
-            <button class="danger-btn" onclick="clearAll()">Clear All</button>
-        </div>
-    </div>
+            <div class="wizard-slide" id="slide2" style="display: none;">
+                <h3>Step 2/3: Choose your plan</h3>
+                
+                <div class="plan-options">
+                    <div class="selectable-plan" onclick="selectPlan(this, '7-day trial')">
+                        <h4>7-day trial</h4>
+                        <p>Free / 7 days for 1 event and no co-editors</p>
+                    </div>
+                    <div class="selectable-plan" onclick="selectPlan(this, 'One-time pass')">
+                        <h4>One-time pass</h4>
+                        <p>$14.99 / 6 months for 1 event and 1 co-editor</p>
+                    </div>
+                    <div class="selectable-plan" onclick="selectPlan(this, 'Subscription')">
+                        <h4>Subscription</h4>
+                        <p>$24.99 / 6 months for unlimited events and co-editors</p>
+                    </div>
+                </div>
 
-    <script src="script.js"></script>
+                <div class="reminder-box">
+                    <h5>What you'll get:</h5>
+                    <ul>
+                        <li>Smart budget assistance & analytics</li>
+                        <li>Easy input</li>
+                        <li>Event sharing</li>
+                        <li>Preset templates</li>
+                    </ul>
+                </div>
+
+                <div class="wizard-buttons">
+                    <button type="button" class="cta-btn" onclick="goToSlide(1)">Back</button>
+                    <button type="button" class="cta-btn disabled-btn" id="slide2NextBtn" onclick="goToSlide(3)">Next</button>
+                </div>
+            </div>
+
+            <div class="wizard-slide" id="slide3" style="display: none;">
+                <h3>Step 3/3: Finish</h3>
+                
+                <div class="summary-box">
+                    <p><strong>Email:</strong> <span id="summaryEmail"></span></p>
+                    <p><strong>Event type:</strong> <span id="summaryEvent"></span></p>
+                    <p><strong>Chosen plan:</strong> <span id="summaryPlan"></span></p>
+                </div>
+
+                <div class="wizard-buttons">
+                    <button type="button" class="cta-btn" onclick="goToSlide(2)">Back</button>
+                    <button type="button" class="cta-btn" onclick="submitForm()">Submit</button>
+                </div>
+            </div>
+
+            <div class="wizard-slide success-message" id="slideSuccess" style="display: none;">
+                <h3>Thanks for choosing us!</h3>
+                <p>We're currently in the development stage, and you have been added to the shortlist of our users. We will notify you once we are ready.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-simple">
+        <p>&copy; 2026 Evease</p>
+    </footer>
+
+</div>
+
+<script>
+    // State object to hold user data
+    let wizardData = {
+        email: '',
+        eventType: '',
+        plan: ''
+    };
+
+    function goToSlide(slideNumber) {
+        // Hide all slides
+        document.getElementById('slide1').style.display = 'none';
+        document.getElementById('slide2').style.display = 'none';
+        document.getElementById('slide3').style.display = 'none';
+        document.getElementById('slideSuccess').style.display = 'none';
+
+        // Capture data when moving from Slide 1
+        if (slideNumber === 2) {
+            let emailInput = document.getElementById('userEmail').value;
+            let eventInput = document.getElementById('eventType').value;
+            wizardData.email = emailInput ? emailInput : 'Not provided';
+            wizardData.eventType = eventInput ? eventInput : 'Not provided';
+        }
+
+        // Populate summary when moving to Slide 3
+        if (slideNumber === 3) {
+            document.getElementById('summaryEmail').innerText = wizardData.email;
+            document.getElementById('summaryEvent').innerText = wizardData.eventType;
+            document.getElementById('summaryPlan').innerText = wizardData.plan;
+        }
+
+        // Show the targeted slide
+        document.getElementById('slide' + slideNumber).style.display = 'block';
+    }
+
+    function selectPlan(cardElement, planName) {
+        // Remove 'active' class from all plan cards
+        let allCards = document.querySelectorAll('.selectable-plan');
+        allCards.forEach(card => card.classList.remove('active'));
+
+        // Add 'active' class to the clicked card
+        cardElement.classList.add('active');
+
+        // Save selected plan
+        wizardData.plan = planName;
+
+        // Enable the Next button on Slide 2
+        document.getElementById('slide2NextBtn').classList.remove('disabled-btn');
+    }
+
+    function submitForm() {
+        // Hide all normal slides and show the success message
+        document.getElementById('slide1').style.display = 'none';
+        document.getElementById('slide2').style.display = 'none';
+        document.getElementById('slide3').style.display = 'none';
+        
+        document.getElementById('slideSuccess').style.display = 'block';
+    }
+</script>
+
 </body>
 </html>
